@@ -39,21 +39,22 @@ putc:
 	pop ax
 	ret
 
-print: 
+puts:
 	push si
 	push ax
 	push bx
-	
-	xor bx, bx
-	mov di, bx			; es = 0xB800, di = ax
-	mov bx, 0xB800		; [0xB800:0x0] video memory address
-	mov es, bx			;
-	mov ah, 0x02		; color
-	
+
+	mov di, bx
+	mov bx, 0xB800
+	mov es, bx
+
+	mov ah, 0x02
+
 	.loop:
 		lodsb
 		or al, al
 		je .done
+		
 		stosw
 
 		jmp .loop

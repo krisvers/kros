@@ -6,16 +6,13 @@ jmp short kernel
 
 kernel:
 	call initscreen
-
 	call clear
-	mov ax, 'a'
-	mov bx, 0x00
-	call putc
-	mov ax, 'b'
-	mov bx, 0x04
-	call putc
+
+	mov si, msg
+	xor bx, bx
+	call puts
 	
 	jmp $
 
-msg: db "Hello, World!", 0x0A, 0x0D, 0
+msg: db "Kernel moment!", 0
 times 1024-($-$$) db 0
