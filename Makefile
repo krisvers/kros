@@ -1,8 +1,8 @@
 ASM := nasm
 
-.PHONY: all build image disk qemu
+.PHONY: all build clean image disk qemu proper dump
 
-all: disk
+all: clean qemu
 
 build:
 	$(ASM) boot.asm -f bin -o build/boot.bin
@@ -12,12 +12,15 @@ image: build
 	dd if=build/boot.bin of=build/disk.img
 	dd if=build/kernel.bin of=build/disk.img conv=notrunc seek=512 bs=1
 
-disk: image
-	dd if=build/disk.img of=/dev/fd0
-
 qemu: image
-	qemu-system-i386 -fda build/disk.img --nographic
+	qemu-system-x86_64 -fda build/disk.img
 
 dump:
 	hexcat build/disk.img
 
+proper:
+	mkdir build
+
+clean:
+	rm -rf build
+	mkdir build

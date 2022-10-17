@@ -16,15 +16,17 @@ print:
 	mov ax, 0xB800
 	mov es, ax
 	mov ch, 0x02
-	mov cl, 0x01
+	mov cl, 0x00
 	
 	.loop:
 		mov [es:di], cx
-		cmp cl, 0x00
+		mov ch, 0x02
+		cmp cl, 0xFF
 		je .done
 
 		inc di
-		inc cl
+		inc di
+		inc cx
 
 		jmp .loop
 
