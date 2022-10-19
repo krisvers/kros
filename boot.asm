@@ -3,7 +3,7 @@ org 0x7C00
 
 start:
 ; setup stack
-	mov bp, 0x7E00
+	mov bp, 0x7C00
 	mov sp, bp
 	xor ax, ax
 	mov ss, ax

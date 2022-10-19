@@ -1,4 +1,5 @@
 [bits 16]
+org 0x1000
 jmp short kernel
 
 %include 'vid.asm'
