@@ -12,5 +12,5 @@ kernel:
 	
 	jmp $
 
-msg db "Hello, World!", 0x3
+msg db "Hello, World!", 0
 times 1024-($-$$) db 0

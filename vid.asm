@@ -20,17 +20,19 @@ clear:
 		ret
 
 print: 
-	pusha
+	push si
+	push ax
+	push bx
 	
-	xor ax, ax
-	mov di, ax			; es = 0xB800, di = ax
-	mov ax, 0xB800		; [0xB800:0x0] video memory address
-	mov es, ax			;
+	xor bx, bx
+	mov di, bx			; es = 0xB800, di = ax
+	mov bx, 0xB800		; [0xB800:0x0] video memory address
+	mov es, bx			;
 	mov ah, 0x02		; color
 	
 	.loop:
 		lodsb
-		cmp al, 0x3
+		or al, al
 		je .done
 		mov word [es:di], ax
 
@@ -40,7 +42,9 @@ print:
 		jmp .loop
 
 	.done:
-		popa
+		pop bx
+		pop ax
+		pop si
 		ret
 
 initscreen:
