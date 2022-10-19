@@ -19,6 +19,26 @@ clear:
 	.done:
 		ret
 
+;
+;	ax: char
+;	bx: address
+;
+
+putc:
+	push ax
+	push bx
+	
+	mov di, bx
+	mov bx, 0xB800
+	mov es, bx
+	mov ah, 0x02
+
+	mov word [es:di], ax
+
+	pop bx
+	pop ax
+	ret
+
 print: 
 	push si
 	push ax
@@ -34,10 +54,7 @@ print:
 		lodsb
 		or al, al
 		je .done
-		mov word [es:di], ax
-
-		inc di
-		inc di
+		stosw
 
 		jmp .loop
 
