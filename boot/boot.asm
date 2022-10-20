@@ -20,7 +20,7 @@ start:
 	
 ; read next sector and run it (not good practice)
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x04	; sectors to read (sector = 512 bytes)
+	mov al, 0x01	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #

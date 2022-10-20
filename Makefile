@@ -7,7 +7,7 @@ all: clean qemu
 
 build:
 	$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/boot.bin
-	$(ASM) $(DIR)/kernel/entry.asm -f bin -o $(DIR)/build/entry.bin
+	$(ASM) $(DIR)/entry.asm -f bin -o $(DIR)/build/entry.bin
 
 image: build
 	dd if=build/boot.bin of=build/disk.img

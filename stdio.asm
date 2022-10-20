@@ -1,17 +1,3 @@
-[bits 16]
-org 0x1000
-
-entry:
-	call initscreen
-	call clear
-
-	mov si, msg
-	xor bx, bx
-	call puts
-
-	cli
-	hlt
-
 clear:
 	xor ax, ax			;
 	mov di, ax			; will write to [es:di]
@@ -35,8 +21,6 @@ clear:
 ;
 ;	ax: char
 ;	bx: address
-;
-
 putc:
 	push ax
 	push bx
@@ -52,6 +36,9 @@ putc:
 	pop ax
 	ret
 
+;
+;	si: pointer to string
+;	bx: address offset
 puts:
 	push si
 	push ax
@@ -67,9 +54,9 @@ puts:
 		lodsb
 		or al, al
 		je .done
-		
-		stosw
 
+		stosw
+		
 		jmp .loop
 
 	.done:
@@ -78,6 +65,48 @@ puts:
 		pop si
 		ret
 
+;
+;	si: pointer to string
+prints:
+	push si
+	push ax
+	push bx
+
+	mov ax, CURSOR
+	mov di, ax
+	mov ax, 0xB800
+	mov es, ax
+	mov ah, 0x02
+
+	.loop:
+		lodsb
+		or al, al
+		je .done
+	
+		cmp al, 0x0D
+		je .newline
+		
+		stosw
+
+		inc CURSOR
+		inc CURSOR
+
+		jmp .loop
+
+	.newline:
+		mov CURSOR, 0x0
+		inc LINE
+
+		mov bx, CURSOR
+		mov di, bx
+
+	.done:
+		pop ax
+		pop si
+
+		ret
+	
+
 initscreen:
 	mov ah, 0x00
 	mov al, 0x03
@@ -85,5 +114,6 @@ initscreen:
 
 	ret
 
-msg: db "We are in 16-bit kernel land.", 0
-times 2048-($-$$) db 0
+section .data
+CURSOR: dw 0x0000
+LINE: dw 0x0000
