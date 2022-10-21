@@ -8,12 +8,7 @@ void __attribute__((section(".entry"))) _kentry() {
         *addr = 0;
     }
 
-    for(int y = 0; y < 25; y++) {
-        char c = '0';
-        for(int x = 0; x < 80; x++) {
-            putc_vidmem(x, y, c++);
-        }
-    }
+	printf_vidmem("Woah ngl thats kinda sus");
 
-    while (1) {}
+    while (1);
 }
