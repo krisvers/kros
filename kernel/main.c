@@ -11,7 +11,7 @@ void __attribute__((section(".entry"))) _kernelentry() {
 
 	terminal_init();
 
-	printf("Test \n\n\n%s", "Woah this is an argument!");
+	printf("Test \nDoes work?!?!?");
 
 	while (1);
 }

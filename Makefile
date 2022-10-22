@@ -7,18 +7,42 @@ ASM := nasm
 
 .PHONY: all build clean image disk qemu proper dump
 
-all: clean qemu
+all: qemu
 
-build:
+build: $(DIR)/build/kernel/main.o $(DIR)/build/kernel/tty.o $(DIR)/build/kernel/video.o $(DIR)/build/kernel/string.o $(DIR)/build/kernel/stdlib.o $(DIR)/build/kernel/keyboard.o $(DIR)/build/kernel/stdio.o $(DIR)/build/bin/boot.bin $(DIR)/build/bin/kernel.bin
+
+#	bootloader
+	
+$(DIR)/build/bin/boot.bin: $(DIR)/boot/boot.asm
 	$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/bin/boot.bin
-	$(CC) $(CFLAGS) -c kernel/main.c -o $(DIR)/build/kernel/main.o
-	$(CC) $(CFLAGS) -c kernel/stdio.c -o $(DIR)/build/kernel/stdio.o
-	$(CC) $(CFLAGS) -c kernel/keyboard.c -o $(DIR)/build/kernel/keyboard.o
-	$(CC) $(CFLAGS) -c kernel/stdlib.c -o $(DIR)/build/kernel/stdlib.o
-	$(CC) $(CFLAGS) -c kernel/string.c -o $(DIR)/build/kernel/string.o
-	$(CC) $(CFLAGS) -c kernel/video.c -o $(DIR)/build/kernel/video.o
-	$(CC) $(CFLAGS) -c kernel/tty.c -o $(DIR)/build/kernel/terminal.o
-	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/* -o build/bin/kernel.bin
+
+#	kernel
+
+$(DIR)/build/kernel/main.o: $(DIR)/kernel/main.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/main.c -o $(DIR)/build/kernel/main.o
+
+#	libs	
+
+$(DIR)/build/kernel/video.o: $(DIR)/kernel/video.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/video.c -o $(DIR)/build/kernel/video.o
+
+$(DIR)/build/kernel/string.o: $(DIR)/kernel/string.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/string.c -o $(DIR)/build/kernel/string.o
+
+$(DIR)/build/kernel/stdlib.o: $(DIR)/kernel/stdlib.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/stdlib.c -o $(DIR)/build/kernel/stdlib.o
+
+$(DIR)/build/kernel/keyboard.o: $(DIR)/kernel/keyboard.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/keyboard.c -o $(DIR)/build/kernel/keyboard.o
+
+$(DIR)/build/kernel/stdio.o: $(DIR)/kernel/stdio.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/stdio.c -o $(DIR)/build/kernel/stdio.o
+
+$(DIR)/build/kernel/tty.o: $(DIR)/kernel/tty.c
+	$(CC) $(CFLAGS) -c $(DIR)/kernel/tty.c -o $(DIR)/build/kernel/tty.o
+
+$(DIR)/build/bin/kernel.bin: $(DIR)/build/kernel/*
+	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/* -o $(DIR)/build/bin/kernel.bin
 
 image: build
 	dd if=build/bin/boot.bin of=build/img/disk.img
