@@ -10,7 +10,16 @@ void terminal_init(void) {
 }
 
 void terminal_putchar(char c) {
-	putc_vidmem(terminal_column, terminal_row, c);
+	switch (c) {
+		case '\n':
+			terminal_row++;
+			terminal_column = -1;
+			break;
+
+		default:
+			putc_vidmem(terminal_column, terminal_row, c);
+			break;
+	}
 	if (++terminal_column == 80) {
 		terminal_column = 0;
 		if (++terminal_row == 25) {

@@ -9,11 +9,7 @@ void __attribute__((section(".entry"))) _kernelentry() {
 	}
 
 	terminal_init();
-	for (unsigned char i = 1; i <= 30; i++) {
-		for (unsigned char j = 1; j <= 80; j++) {
-			terminal_putchar(i+64);
-		}
-	}
+	terminal_putstr("Woah! That's crazy.\nIs this new line?");
 
 	while (1);
 }
