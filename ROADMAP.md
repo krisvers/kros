@@ -1,13 +1,14 @@
-# roadmap of runix as of 10/22/2022 16:50 UTC
+# roadmap of runix 
+as of 10/22/2022 16:50 UTC
 
 ## KEY:
-"* done"
-"/ working on"
-"  will do later"
+d done
+w working on
+  plan to do later
 
 ## TODO:
-"[ ] Keyboard driver"
+"[w] Keyboard driver"
 "[ ] Simple shell interface"
 "[ ] Disk driver"
 "[ ] FAT 32 driver"
-"[ ] ..."
+"[ ] Porting a c compiler"
