@@ -13,6 +13,7 @@ build:
 	$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/bin/boot.bin
 	$(CC) $(CFLAGS) -c kernel/main.c -o $(DIR)/build/kernel/main.o
 	$(CC) $(CFLAGS) -c kernel/stdio.c -o $(DIR)/build/kernel/stdio.o
+	$(CC) $(CFLAGS) -c kernel/keyboard.c -o $(DIR)/build/kernel/keyboard.o
 	$(CC) $(CFLAGS) -c kernel/stdlib.c -o $(DIR)/build/kernel/stdlib.o
 	$(CC) $(CFLAGS) -c kernel/string.c -o $(DIR)/build/kernel/string.o
 	$(CC) $(CFLAGS) -c kernel/video.c -o $(DIR)/build/kernel/video.o
