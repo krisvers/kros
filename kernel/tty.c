@@ -1,4 +1,4 @@
-#include <terminal.h>
+#include <tty.h>
 
 static size_t terminal_row;
 static size_t terminal_column;

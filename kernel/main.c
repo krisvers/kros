@@ -1,4 +1,4 @@
-#include <terminal.h>
+#include <tty.h>
 
 extern char _BSS_START;
 extern char _BSS_END;
@@ -9,7 +9,7 @@ void __attribute__((section(".entry"))) _kernelentry() {
 	}
 	terminal_init();
 
-	
+	terminal_putstr("Test!\n\n\nDid it work?");
 
 	while (1);
 }
