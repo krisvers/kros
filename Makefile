@@ -10,24 +10,29 @@ ASM := nasm
 all: clean qemu
 
 build:
-	$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/boot.bin
-	$(CC) $(CFLAGS) -c kernel/main.c -o $(DIR)/build/main.o
-	$(CC) $(CFLAGS) -c kernel/video.c -o $(DIR)/build/video.o
-	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/main.o $(DIR)/build/video.o -o build/kernel.bin
+	$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/bin/boot.bin
+	$(CC) $(CFLAGS) -c kernel/main.c -o $(DIR)/build/kernel/main.o
+	$(CC) $(CFLAGS) -c kernel/video.c -o $(DIR)/build/kernel/video.o
+	$(CC) $(CFLAGS) -c kernel/terminal.c -o $(DIR)/build/kernel/terminal.o
+	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/* -o build/bin/kernel.bin
 
 image: build
-	dd if=build/boot.bin of=build/disk.img
-	dd if=build/kernel.bin of=build/disk.img conv=notrunc seek=512 bs=1
+	dd if=build/bin/boot.bin of=build/img/disk.img
+	dd if=build/bin/kernel.bin of=build/img/disk.img conv=notrunc seek=512 bs=1
 
 qemu: image
-	qemu-system-x86_64 -fda build/disk.img
+	qemu-system-x86_64 -fda build/img/disk.img
 
 dump:
-	hexcat build/disk.img
+	hexcat build/img/disk.img
 
 proper:
-	mkdir build
+	mkdir -p build/kernel/
+	mkdir -p build/bin/
+	mkdir -p build/img/
 
 clean:
 	rm -rf build
-	mkdir build
+	mkdir -p build/kernel/
+	mkdir -p build/bin/
+	mkdir -p build/img/
