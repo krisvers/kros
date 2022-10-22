@@ -1,5 +1,5 @@
-# roadmap of runix 
-as of 10/22/2022 16:50 UTC
+# roadmap
+as of 10/22/2022 18:20 UTC
 
 ## KEY:
 d done,
