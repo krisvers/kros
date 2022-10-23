@@ -1,15 +1,17 @@
 # roadmap
-as of 10/22/2022 18:20 UTC
+as of 10/23/2022 12:44 UTC
 
-## KEY
-d done,
-w working on,
-  plan to do later,
+### KEY:
+'d' done,
 
-## TODO
+'w' working on
+
+
+### TODO:
 [w] Keyboard driver,
-[ ] Simple shell interface,
-[ ] Disk driver,
-[ ] FAT 32 driver,
-[ ] ...
-[ ] Porting a c compiler,
+
+[_] Simple shell interface,
+
+[_] Disk driver,
+
+[_] FAT 32 driver
