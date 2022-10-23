@@ -1,4 +1,4 @@
-DIR = $(shell pwd)/..
+DIR = $(shell cd .. && pwd && cd kernel)
 CC := gcc
 CFLAGS := -I include -O3 -nostdlib -m32 -march=i386 -fno-pie -fno-stack-protector -ffreestanding -Wall
 LD := ld

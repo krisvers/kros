@@ -10,11 +10,14 @@ ASM := nasm
 all: qemu
 
 build:
-	make --no-print-directory -C ./kernel
-	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/*.o $(DIR)/build/kernel/lib/*.o -o $(DIR)/build/bin/kernel.bin
-	$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/bin/boot.bin
-	dd if=build/bin/boot.bin of=build/img/disk.img
-	dd if=build/bin/kernel.bin of=build/img/disk.img conv=notrunc seek=512 bs=1
+	@make --no-print-directory -C ./kernel
+	@echo ">  Linking libs and kernel..."
+	@$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/*.o $(DIR)/build/kernel/lib/*.o -o $(DIR)/build/bin/kernel.bin
+	@echo ">  Assembling bootloader..."
+	@$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/bin/boot.bin
+	@echo ">  Creating disk image..."
+	@dd if=build/bin/boot.bin of=build/img/disk.img
+	@dd if=build/bin/kernel.bin of=build/img/disk.img conv=notrunc seek=512 bs=1
 
 clean:
 	rm -rf build
@@ -23,6 +26,7 @@ clean:
 	mkdir -p build/img/
 
 qemu: build
-	qemu-system-x86_64 -fda build/img/disk.img
+	@echo "! Starting qemu"
+	@qemu-system-x86_64 -fda build/img/disk.img
 
 rebuild: clean build
