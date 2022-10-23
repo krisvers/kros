@@ -1,12 +1,12 @@
 # roadmap
 as of 10/22/2022 18:20 UTC
 
-## KEY:
+## KEY
 d done,
 w working on,
   plan to do later,
 
-## TODO:
+## TODO
 [w] Keyboard driver,
 [ ] Simple shell interface,
 [ ] Disk driver,
