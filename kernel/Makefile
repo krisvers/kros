@@ -1,8 +1,6 @@
 DIR = $(shell pwd)/..
 CC := gcc
 CFLAGS := -I include -O3 -nostdlib -m32 -march=i386 -fno-pie -fno-stack-protector -ffreestanding -Wall
-LD := ld
-LDFLAGS := -m elf_i386 -T $(DIR)/linker.ld -nostdlib
 
 all: $(DIR)/build/kernel/main.o $(DIR)/build/kernel/lib/video.o $(DIR)/build/kernel/lib/string.o $(DIR)/build/kernel/lib/stdlib.o $(DIR)/build/kernel/lib/keyboard.o $(DIR)/build/kernel/lib/stdio.o $(DIR)/build/kernel/lib/tty.o
 
