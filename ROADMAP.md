@@ -4,14 +4,16 @@ as of 10/23/2022 12:44 UTC
 ### KEY:
 'd' done,
 
-'w' working on
+'w' working on,
+
+'n' next up
 
 
 ### TODO:
-[w] Keyboard driver,
+[d] Keyboard driver *kinda done
 
-[_] Simple shell interface,
+[d] Simple shell interface *for the most part
 
-[_] Disk driver,
+[n] Disk driver
 
 [_] FAT 32 driver

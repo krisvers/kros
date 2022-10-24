@@ -7,12 +7,12 @@ ASM := nasm
 
 .PHONY: all build clean qemu rebuild
 
-all: qemu
+all: clean qemu
 
 build:
 	@make --no-print-directory -C ./kernel
 	@echo ">  Linking libs and kernel..."
-	@$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/*.o $(DIR)/build/kernel/lib/*.o -o $(DIR)/build/bin/kernel.bin
+	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/*.o $(DIR)/build/kernel/lib/*.o -o $(DIR)/build/bin/kernel.bin
 	@echo ">  Assembling bootloader..."
 	@$(ASM) $(DIR)/boot/boot.asm -f bin -o $(DIR)/build/bin/boot.bin
 	@echo ">  Creating disk image..."
