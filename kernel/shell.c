@@ -5,23 +5,17 @@
 #include <tty.h>
 #include <video.h>
 
-static unsigned char cursor = 0;
 static char input;
 static char previn;
-static char argv[100];
-static unsigned char argc;
-static buffer[100];
 
 void shell_init() {
 	terminal_init();
 }
 
 void shell_run() {
-	while (input = read_key_char() && strcmp(argv, "exit") != 0) {
+	while (input = read_key_char()) {
 		if (input != previn && input > 0) {
 			putchar(input);
-			memcpy(input, argv[strlen(argv)], 1);
-			putchar(argv[strlen(argv)]);
 		}
 
 		previn = input;
