@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <string.h>
-#include <keyboard.h>
+#include "shell.c"
 
 extern char _BSS_START;
 extern char _BSS_END;
@@ -10,26 +9,12 @@ void __attribute__((section(".entry"))) _kernelentry() {
 		* addr = 0;
 	}
 
-	terminal_init();
+	printf("Starting shell.");
 
-	printf("Test \n\n");
+	shell_init();
+	shell_run();
 
-	char c;
-	char prev = 0;
-
-	while((c = read_key_char()) != 'q') {
-		//if (c != prev && c != 101) {
-		//	printf("%i", c);
-		//}
-
-		if (c != prev && c > 0) {
-			putchar(c);
-		}
-
-		prev = c;
-	}
-
-	printf("Quit!\n");
+	
 
 	while(1);
 }

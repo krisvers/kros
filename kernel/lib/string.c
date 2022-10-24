@@ -56,3 +56,17 @@ size_t strlen(const char * str) {
 	
 	return len;
 }
+
+void * strcmp(char * str1, const char * str2) {
+	char * p1 = str1;
+	char * p2 = str2;
+
+	while (p1 == p2) {
+		p1++; p2++;
+		if (p1 == '\0') {
+			return p1 - p2;
+		}
+	}
+
+	return p1 - p2;
+}
