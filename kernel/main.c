@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "shell.c"
 
 extern char _BSS_START;
 extern char _BSS_END;
@@ -9,12 +8,8 @@ void __attribute__((section(".entry"))) _kernelentry() {
 		* addr = 0;
 	}
 
-	printf("Starting shell.");
-
-	shell_init();
-	shell_run();
-
-	
+	printf("Kernel moment?\n\n");
+	printf("Wow!\nMan that's crazy...\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAMOGUS!");
 
 	while(1);
 }
