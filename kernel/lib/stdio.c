@@ -4,12 +4,12 @@ int puts(const char * string) {
 	return printf("%s\n", string);
 }
 
-int putchar(int ic) {
+int putc(int ic) {
 	char c = (char) ic;
 	if (c == '\n') {
-		terminal_newline();
+		tty_linefeed();
 	} else {
-		terminal_putchar(c);
+		tty_putc(c);
 	}
 
 	// TODO: Implement stdio and the write system call.
@@ -19,7 +19,7 @@ int putchar(int ic) {
 static bool print(const char * data, size_t length) {
 	const unsigned char * bytes = (const unsigned char *) data;
 	for (size_t i = 0; i < length; i++)
-		if (putchar(bytes[i]) == EOF) {
+		if (putc(bytes[i]) == EOF) {
 			return false;
 		}
 	return true;

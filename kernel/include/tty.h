@@ -1,9 +1,9 @@
 #pragma once
-#include <video.h>
+#include <video/vga.h>
 #include <types.h>
 
-void terminal_init(void);
-void terminal_putchar(char c);
-void terminal_newline(void);
-void terminal_reset(void);
-void terminal_putstr(const char * str);
+void tty_init();
+void tty_putc(char c);
+void tty_linefeed();
+void tty_reset();
+void tty_puts(const char * str);

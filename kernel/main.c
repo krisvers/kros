@@ -1,15 +1,5 @@
-#include <stdio.h>
+#include <video/vga.h>
 
-extern char _BSS_START;
-extern char _BSS_END;
-
-void __attribute__((section(".entry"))) _kernelentry() {
-	for (char * addr = &_BSS_START; addr < &_BSS_END; addr++) {
-		* addr = 0;
-	}
-
-	printf("Kernel moment?\n\n");
-	printf("Wow!\nMan that's crazy...\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAMOGUS!");
-
-	while(1);
+void main() {
+	vga_putpixel(0, 0, 0xF);
 }

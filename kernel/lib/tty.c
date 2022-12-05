@@ -1,40 +1,40 @@
 #include <tty.h>
 
-static size_t terminal_row;
-static size_t terminal_column;
+static size_t tty_row;
+static size_t tty_column;
 
-void terminal_init(void) {
-	terminal_row = 0;
-	terminal_column = 0;
-	clear_vidmem();
+void tty_init() {
+	tty_row = 0;
+	tty_column = 0;
+	vga_clear();
 }
 
-void terminal_putchar(char c) {
-	putc_vidmem(terminal_column, terminal_row, c);
+void tty_putc(char c) {
+	vga_putpixel(tty_column, tty_row, c);
 	
-	if (++terminal_column == 80) {
-		terminal_column = 0;
-		if (++terminal_row == 25) {
-			terminal_reset();
+	if (++tty_column == 320) {
+		tty_column = 0;
+		if (++tty_row == 200) {
+			tty_reset();
 		}
 	}
 }
 
-void terminal_newline(void) {
-	terminal_column = 0;
-	if (++terminal_row == 25) {
-		terminal_reset();
+void tty_linefeed() {
+	tty_column = 0;
+	if (++tty_row == 25) {
+		tty_reset();
 	}
 }
 
-void terminal_reset(void) {
-	terminal_column = 0;
-	terminal_row = 0;
-	clear_vidmem();
+void tty_reset() {
+	tty_column = 0;
+	tty_row = 0;
+	vga_clear();
 }
 
-void terminal_putstr(const char * str) {
+void tty_puts(const char * str) {
 	for (int i = 0; str[i] != 0; i++) {
-		terminal_putchar(str[i]);
+		tty_puts(str[i]);
 	}
 }
