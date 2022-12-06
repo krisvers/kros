@@ -1,5 +1,7 @@
 #include <video/vga.h>
 
 void main() {
-	vga_putpixel(0, 0, 0xF);
+	for (int i = 0; i < sizeof(enum vga_color); i++) {
+		vga_putpixel(i, 0, 15);
+	}
 }

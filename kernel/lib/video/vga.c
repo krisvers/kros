@@ -2,8 +2,8 @@
 
 static char *const vidmem = (char*)0xA0000;
 
-void vga_putpixel(int x, int y, char c) {
-	vidmem[((y * 320) + x)] = c;
+void vga_putpixel(int x, int y, enum vga_color color) {
+	vidmem[((y * 320) + x)] = color;
 }
 
 void vga_clear() {
