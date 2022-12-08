@@ -1,5 +1,7 @@
-#include <video/font.h>
+#include <stdio.h>
+#include <keyboard.h>
+#include <stdbool.h>
 
 void main() {
-	text_putc(0, 0, '!', YELLOW);
+	printf("Hello World\nAmogus");
 }

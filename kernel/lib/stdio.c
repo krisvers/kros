@@ -9,7 +9,7 @@ int putc(int ic) {
 	if (c == '\n') {
 		tty_linefeed();
 	} else {
-		tty_putc(c);
+		tty_putc(c, WHITE);
 	}
 
 	// TODO: Implement stdio and the write system call.
