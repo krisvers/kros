@@ -1,5 +1,7 @@
 #pragma once
-#include <stdio.h>
+#include <kernel/kstdio.h>
+
+#define NULL (void *) 0
 
 __attribute__((__noreturn__))
 void abort(void);

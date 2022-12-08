@@ -1,5 +1,6 @@
 #pragma once
 #include <tty.h>
+#include <video/vga.h>
 #include <limits.h>
 #include <stdbool.h>
 #include <stdarg.h>
@@ -7,6 +8,6 @@
 
 #define EOF (-1)
 
-int printf(const char * restrict fmt, ...);
-int putc(int ic);
-int puts(const char * string);
+int kprintf(const char * restrict fmt, ...);
+int kputc(int ic);
+int kputs(const char * string);

@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <kernel/kernel.h>
 #include <keyboard.h>
 #include <stdbool.h>
 
 void main() {
-	printf("Hello World\nAmogus");
+	kernel_init();
+	printf("Jello\n");
 }

@@ -3,7 +3,7 @@
 __attribute__((__noreturn__))
 void abort(void) {
 	// TODO: Add proper kernel panic.
-	printf("kernel: panic: abort()\n");
+	kprintf("kernel: panic: abort()\n");
         asm volatile("hlt");
 
 	while (1);

@@ -1,6 +1,7 @@
 #pragma once
-
 #include <types.h>
+
+#define UNUSED_PORT 0x80
 
 #define outb(port, value) asm volatile("outb %%al, %%dx" ::"d"(port), "a"(value))
 #define outw(port, value) asm volatile("outw %%ax, %%dx" ::"d"(port), "a"(value))

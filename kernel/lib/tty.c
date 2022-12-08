@@ -27,6 +27,11 @@ void tty_reset() {
     tty_row = 0;
 }
 
+void tty_setcursor(int x, int y) {
+    tty_column = x;
+    tty_row = y;
+}
+
 void tty_puts(const char * str, enum vga_color fg) {
     for (unsigned char cp = 0; str[cp] != 0; cp++) {
         tty_putc(str[cp], fg);

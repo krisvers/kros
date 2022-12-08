@@ -1,6 +1,11 @@
 {
     "files.associations": {
-        "tty.h": "c"
+        "tty.h": "c",
+        "stdbool.h": "c",
+        "keyboard.h": "c",
+        "idt.h": "c",
+        "kernel.h": "c",
+        "cpubasics.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

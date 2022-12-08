@@ -1,6 +1,9 @@
 [bits 16]
 org 0x7C00
 
+%define KERN_SIZE 0x24
+%define KERN_OFFSET 0x1000
+
 start:
 	jmp .skip_bpb ; Workaround for some BIOSes that require this stub
     nop
@@ -14,7 +17,7 @@ start:
     ; Source: https://github.com/freebsd/freebsd-src/blob/82a21151cf1d7a3e9e95b9edbbf74ac10f386d6a/stand/i386/boot2/boot1.S
   .bpb:
     times 3-($-$$) db 0
-    .bpb_oem_id:            db "PONG    "
+    .bpb_oem_id:            db "KROS     "
     .bpb_sector_size:       dw 512
     .bpb_sects_per_cluster: db 0
     .bpb_reserved_sects:    dw 0
@@ -31,8 +34,8 @@ start:
     .bpb_reserved:          db 0
     .bpb_signature:         db 0
     .bpb_volume_id:         dd 0
-    .bpb_volume_label:      db "PONG       "
-    .bpb_filesystem_type:   times 8 db 0\
+    .bpb_volume_label:      db "KROS       "
+    .bpb_filesystem_type:   times 8 db 0
 
 	.skip_bpb:
 		cli
@@ -60,105 +63,105 @@ start:
 	
 ; read next sector and run it (not good practice)
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x00	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x01	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x02	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x80	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x81	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x82	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0x83	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
 
 	mov ah, 0x02	; read mode for int 0x13
-	mov al, 0x24	; sectors to read (sector = 512 bytes)
+	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
 	mov dl, 0xE0	; drive #
 	xor bx, bx
 	mov es, bx		; 
-	mov bx, 0x1000	; [es:bx] = [0x0:0x1000]; where we load the kernel
+	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
 	int 0x13
 	jnc .vid
 	clc
@@ -202,7 +205,7 @@ start:
 	mov ss, ax
 	mov esp, 0x7FFFF ; stack pointer at ~511KiB
 
-	jmp dword 0x8:0x1000
+	jmp dword 0x8:KERN_OFFSET
 
 GDT:
     db 0, 0, 0, 0, 0, 0, 0, 0 ; null
