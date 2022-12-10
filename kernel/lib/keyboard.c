@@ -55,7 +55,7 @@ static char keycodes_shift[128] = {
 
 static bool shift_pressed = false;
 
-char read_key_char() {
+char poll_key_char() {
 	char keycode = inb(0x60);
 	if ((keycode == 0x2A) || (keycode == 0x36)) {
 		return -2;

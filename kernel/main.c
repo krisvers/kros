@@ -5,5 +5,6 @@
 
 void main() {
 	kernel_init();
-	kprintf("Hello from the kernel!!!\n");
+	printf("Hello world %x test!\n", 69);
+	printf("JEllon\n");
 }

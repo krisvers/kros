@@ -21,6 +21,13 @@ void tty_linefeed() {
     tty_row++;
 }
 
+void tty_tab() {
+    tty_column += 4;
+    if (tty_column >= 80) {
+        tty_linefeed();
+    }
+}
+
 void tty_reset() {
     vga_setbg(BLACK);
     tty_column = 0;

@@ -1,5 +1,5 @@
 #pragma once
-#include <kernel/kstdio.h>
+#include <stdio.h>
 
 #define NULL (void *) 0
 

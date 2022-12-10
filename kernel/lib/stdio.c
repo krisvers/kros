@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+static char hex_chars[16] = "0123456789ABCDEF";
+
 int puts(const char * string) {
 	return printf("%s\n", string);
 }
@@ -8,6 +10,8 @@ int putc(int ic) {
 	char c = (char) ic;
 	if (c == '\n') {
 		tty_linefeed();
+	} else if (c == '\t') {
+		tty_tab();
 	} else {
 		tty_putc(c, WHITE);
 	}
@@ -79,6 +83,38 @@ int printf(const char * restrict format, ...) {
 				return -1;
 			}
 			written += len;
+		} else if (*format == 'd' || *format == 'i') {
+			format++;
+			int num = va_arg(parameters, int);
+			char buffer[32];
+			int pos = 0;
+
+			do {
+				unsigned long long rem = num % 10;
+				num /= 10;
+				buffer[pos++] = hex_chars[rem];
+			} while (num > 0);
+
+			while (--pos >= 0) {
+				putc(buffer[pos]);
+			}
+		} else if (*format == 'x') {
+			putc('0');
+			putc('x');
+			format++;
+			int num = va_arg(parameters, int);
+			char buffer[32];
+			int pos = 0;
+
+			do {
+				unsigned long long rem = num % 16;
+				num /= 16;
+				buffer[pos++] = hex_chars[rem];
+			} while (num > 0);
+
+			while (--pos >= 0) {
+				putc(buffer[pos]);
+			}
 		} else {
 			format = format_begun_at;
 			size_t len = strlen(format);

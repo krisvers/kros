@@ -27,3 +27,5 @@ inline uint32_t inl(uint16_t port) {
 inline uint8_t bitget(uint32_t input, uint8_t bit) {
     return (input & (0x1 << bit)) >> bit;
 }
+
+void io_wait();

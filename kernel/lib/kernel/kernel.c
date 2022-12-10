@@ -4,4 +4,5 @@ void kernel_init() {
     gdt_init();
     idt_init();
     isr_init();
+    pic_init();
 }

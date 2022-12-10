@@ -2,4 +2,4 @@
 
 #include <stdbool.h>
 
-char read_key_char();
+char poll_key_char();
