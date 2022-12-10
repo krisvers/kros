@@ -4,7 +4,7 @@ KERNEL_BASE = 0x1000;
 
 MEMORY
 {
-	ram (rwx) : org = KERNEL_BASE, l = 18432
+	ram (rwx) : org = KERNEL_BASE, l = 25600
 }
 
 SECTIONS {
