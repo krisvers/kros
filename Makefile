@@ -12,7 +12,7 @@ all: clean qemu
 build:
 	@make --no-print-directory -C ./kernel
 	@echo ">  Linking libs and kernel..."
-	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/*.o $(DIR)/build/kernel/*/*.o $(DIR)/build/kernel/*/*/*.o $(DIR)/build/kernel/*/*/*.oasm -o $(DIR)/build/bin/kernel.bin
+	$(LD) $(LDFLAGS) --oformat binary $(DIR)/build/kernel/*.o $(DIR)/build/kernel/*/*.o $(DIR)/build/kernel/*/*/*.o $(DIR)/build/kernel/*/*.oasm $(DIR)/build/kernel/*/*/*.oasm -o $(DIR)/build/bin/kernel.bin
 	@echo ">  Assembling bootloader..."
 	@touch $(DIR)/build/bin/boot.bin
 	@nasm ./boot/boot.asm -f bin -o ./build/bin/boot.bin

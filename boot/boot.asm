@@ -53,7 +53,6 @@ start:
 
 ; reset disk
 	mov ah, 0x00
-	mov dl, 0x80	; floppy 1
 	int 0x13
 
 	xor ax, ax
@@ -67,7 +66,6 @@ start:
 	mov ch, 0x00	; cylinder #
 	mov cl, 0x02	; sector #
 	mov dh, 0x00	; head #
-	mov dl, 0x00	; drive #
 	xor bx, bx
 	mov es, bx		; 
 	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
@@ -75,96 +73,7 @@ start:
 	jnc .vid
 	clc
 
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0x01	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
-
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0x02	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
-
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0x80	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
-
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0x81	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
-
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0x82	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
-
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0x83	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
-
-	mov ah, 0x02	; read mode for int 0x13
-	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
-	mov ch, 0x00	; cylinder #
-	mov cl, 0x02	; sector #
-	mov dh, 0x00	; head #
-	mov dl, 0xE0	; drive #
-	xor bx, bx
-	mov es, bx		; 
-	mov bx, KERN_OFFSET	; [es:bx] = [0x0:KERN_OFFSET]; where we load the kernel
-	int 0x13
-	jnc .vid
-	clc
+	jmp error
 	
 	.vid:
 ; setup video mode
@@ -216,6 +125,20 @@ GDT_end:
 gdtr:
     dw 0 ; limit
     dd 0 ; base
+
+error:
+	mov ah, 0x0E
+	mov al, 'E'
+	xor bh, bh
+	int 0x10
+
+	mov al, 'R'
+	int 0x10
+
+	mov al, 'R'
+	int 0x10
+
+	hlt
 
 ;	pack with zeroes
 times 510-($-$$) db 0

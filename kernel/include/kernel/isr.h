@@ -14,4 +14,4 @@ typedef struct {
 typedef void (*ISRHandler) (Registers* regs);
 
 void isr_init();
-void isr_reghandler(int interrupt, ISRHandler handler);
+void isr_reg_handler(int interrupt, ISRHandler handler);

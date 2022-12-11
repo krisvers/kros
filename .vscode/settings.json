@@ -6,7 +6,9 @@
         "idt.h": "c",
         "kernel.h": "c",
         "cpubasics.h": "c",
-        "irq.h": "c"
+        "irq.h": "c",
+        "gdt.h": "c",
+        "isr.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

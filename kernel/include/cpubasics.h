@@ -28,12 +28,8 @@ inline uint8_t bitget(uint32_t input, uint8_t bit) {
     return (input & (0x1 << bit)) >> bit;
 }
 
-inline uint8_t disable_interrupts() {
-    asm volatile("cli");
-}
+void __attribute((cdecl)) disable_interrupts();
 
-inline uint8_t enable_interrupts() {
-    asm volatile("sti");
-}
+void __attribute((cdecl)) enable_interrupts();
 
 void io_wait();
