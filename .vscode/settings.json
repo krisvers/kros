@@ -5,7 +5,8 @@
         "keyboard.h": "c",
         "idt.h": "c",
         "kernel.h": "c",
-        "cpubasics.h": "c"
+        "cpubasics.h": "c",
+        "irq.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

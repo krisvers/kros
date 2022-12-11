@@ -551,13 +551,15 @@ void isr_initgates() {
 	idt_setgate(253, ISR253, GDT_CODE_SEGMENT, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
 	idt_setgate(254, ISR254, GDT_CODE_SEGMENT, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
 	idt_setgate(255, ISR255, GDT_CODE_SEGMENT, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
+}
+void isr_init() {
+	isr_initgates();
 
 	for (int i = 0; i < 256; i++) {
 		idt_enablegate(i);
 	}
-}
-void isr_init() {
-	isr_initgates();
+
+	idt_disablegate(0x80);
 }
 
 void __attribute((cdecl)) isr_handler(Registers * regs) {
@@ -574,4 +576,9 @@ void __attribute((cdecl)) isr_handler(Registers * regs) {
 		printf("	interrupt=%x,	errorcode=%x\n", regs->interrupt, regs->error);
 		abort();
 	}
+}
+
+void isr_reghandler(int interrupt, ISRHandler handler) {
+	isr_handlers[interrupt] = handler;
+	idt_enablegate(interrupt);
 }
