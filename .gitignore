@@ -1,2 +1,7 @@
 build/
 build/*
+*.d
+*.o
+*.hdd
+*.iso
+loopback-dev
