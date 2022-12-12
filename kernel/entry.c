@@ -2,8 +2,8 @@
 #include <stddef.h>
 #include "limine.h"
 
-struct limine_terminal_request terminal_request = {
-    LIMINE_TERMINAL_REQUEST,
+struct limine_framebuffer_request framebuffer_request = {
+    LIMINE_FRAMEBUFFER_REQUEST,
     0
 };
 
@@ -19,21 +19,21 @@ static void done(void) {
     }
 }
 
-struct limine_terminal_response * terminal_response;
+struct limine_framebuffer_response * framebuffer_response;
 
 // The following will be our kernel's entry point.
 void _start(void) {
-    if (terminal_request.response == NULL) {
+    if (framebuffer_request.response == NULL) {
         done();
     }
 
-    terminal_response = terminal_request.response;
+    framebuffer_response = framebuffer_request.response;
 
-    if (!(terminal_response->terminal_count > 0)) {
+    if (!(framebuffer_response->framebuffer_count > 0)) {
         done();
     }
 
-    main(terminal_response);
+    main(framebuffer_response->framebuffers[0]);
 
     // We're done, just hang...
     done();
