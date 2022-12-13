@@ -1,7 +1,8 @@
-build/
-build/*
-*.d
-*.o
-*.hdd
+limine
+ovmf-x64
+kernel/limine.h
+*.elf
 *.iso
-loopback-dev
+*.hdd
+*.o
+*.d
