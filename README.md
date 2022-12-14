@@ -12,7 +12,7 @@
 ## Roadmap
 
 Key:
-*	 x:	done
+*	 d:	done
 *	 s:	almost done, possible completed in the future
 *	 w:	working on
 *	 n:	next up
@@ -20,8 +20,8 @@ Key:
 *	 -:	undecided
 *	 /:	scrapped
 
--	[x]	framebuffer terminal driver		
--	[x]	stdio implementation			
+-	[d]	framebuffer terminal driver		
+-	[d]	stdio implementation			
 -	[s]	kernel libs						
 -	[w]	GDT/IDT							
 -	[n]	software interrupts				
