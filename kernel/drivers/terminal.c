@@ -16,8 +16,8 @@ static const uint32_t PSF1_MODE512     = 0x01;
 static bool                     initialized      = false;
 static struct limine_framebuffer * framebuffer   = NULL;
 static struct PSF1Font *        font             = (struct PSF1Font *) zap_vga09_psf;
-static uint32_t                 x                = 0;
-static uint32_t                 y                = 0;
+static uint32_t                 x                = 1;
+static uint32_t                 y                = 1;
 static short int                font_scale       = 1;
 
 void tty_init(struct limine_framebuffer * buffer, short int scale) {
@@ -40,8 +40,8 @@ void tty_puts(const char * str) {
 void tty_putc(uint32_t c) {
     if (!initialized) return;
 	const uint32_t glyphCount  = font->mode == PSF1_MODE512 ? 512 : 256;
-    uint32_t charactersPerLine = framebuffer->width / (PSF1_FONT_WIDTH + 2);
-    uint32_t charactersPerRow  = framebuffer->height / (font->charsize + 2);
+    uint32_t charactersPerLine = (framebuffer->width / (PSF1_FONT_WIDTH + 2)) + 30;
+    uint32_t charactersPerRow  = (framebuffer->height / (font->charsize + 2)) + 17;
 
     switch (c)
     {
@@ -52,8 +52,8 @@ void tty_putc(uint32_t c) {
             x--;
             break;
         case '\f': break;
-        case '\n': y++; x = 0; goto check_y;
-        case '\r': x = 0; break;
+        case '\n': y++; x = 1; goto check_y;
+        case '\r': x = 1; break;
         case '\t':
         {
             static const uint8_t tabSize = 8;
@@ -91,14 +91,16 @@ void tty_putc(uint32_t c) {
         }
         break;
     }
-    if (x * font_scale >= charactersPerLine)
+    if (x >= charactersPerLine / font_scale)
     {
-        x = 0;
+        x = 1;
         y++;
     check_y:
-        if (y * font_scale >= charactersPerRow)
+        if (y >= charactersPerRow / font_scale)
         {
 			tty_fill(BG_COLOR);
+            x = 1;
+            y = 1;
         }
     }
 }
