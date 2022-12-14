@@ -12,21 +12,21 @@
 ## Roadmap
 
 Key:
-*	x:	done
-*	s:	almost done, possible completed in the future
-*	w:	working on
-*	n:	next up
-*	.:	saved for future me
-*	-:	undecided
-*	/:	scrapped
+*	 x:	done
+*	 s:	almost done, possible completed in the future
+*	 w:	working on
+*	 n:	next up
+*	 .:	saved for future me
+*	 -:	undecided
+*	 /:	scrapped
 
--	framebuffer terminal driver		[x]
--	stdio implementation			[x]
--	kernel libs						[s]
--	GDT/IDT							[w]
--	software interrupts				[n]
--	hardware interrupts (PIC)		[.]
--	timer							[.]
--	physical memory management		[.]
--	virtual memory management		[-]
+-	[x]	framebuffer terminal driver		
+-	[x]	stdio implementation			
+-	[s]	kernel libs						
+-	[w]	GDT/IDT							
+-	[n]	software interrupts				
+-	[.]	hardware interrupts (PIC)		
+-	[.]	timer							
+-	[.]	physical memory management		
+-	[-]	virtual memory management		
 -	...
