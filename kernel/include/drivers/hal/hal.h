@@ -1,5 +1,5 @@
 #pragma once
-#include <drivers/hal/gdt.h>
-#include <drivers/hal/idt.h>
+#include <arch/x64/gdt.h>
+#include <arch/x64/idt.h>
 
 void hal_init();
