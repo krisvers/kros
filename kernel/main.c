@@ -7,7 +7,6 @@
 
 void main(struct limine_framebuffer * framebuffer) {
 	tty_init(framebuffer, 2);
-	puts("Initializing Hardware Abstraction Layer!\n");
+	printf("Hello, World!\n");
 	hal_init();
-	printf("Does it work?");
 }
