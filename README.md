@@ -2,7 +2,7 @@
 
 * This is my first hobby OS and I look forward to finishing it :)
 
-[Hello, World!](./rsrc/hello-world.png)
+![Hello, World!](./rsrc/hello-world.png)
 
 ## What can it do?
 
