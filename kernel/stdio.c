@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+static char const g_hexchars[16] = "0123456789ABCDEF";
+
 static bool print(const char * data, size_t length) {
 	const unsigned char * bytes = (const unsigned char *) data;
 	for (size_t i = 0; i < length; i++)
@@ -63,6 +65,38 @@ int printf(const char * restrict format, ...) {
 			if (!print(str, len))
 				return -1;
 			written += len;
+		} else if (*format == 'i' || *format == 'd') {
+			format++;
+			int num = va_arg(parameters, int);
+			char buffer[32];
+			int pos = 0;
+
+			do {
+				unsigned long long rem = num % 10;
+				num /= 10;
+				buffer[pos++] = g_hexchars[rem];
+			} while (num > 0);
+
+			while (--pos >= 0) {
+				putc(buffer[pos]);
+			}
+		} else if (*format == 'x') {
+			putc('0'); putc('x');
+
+			format++;
+			int num = va_arg(parameters, int);
+			char buffer[32];
+			int pos = 0;
+
+			do {
+				unsigned long long rem = num % 16;
+				num /= 16;
+				buffer[pos++] = g_hexchars[rem];
+			} while (num > 0);
+
+			while (--pos >= 0) {
+				putc(buffer[pos]);
+			}
 		} else {
 			format = format_begun_at;
 			size_t len = strlen(format);
