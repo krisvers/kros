@@ -1,8 +1,8 @@
 # kros
 
-* This is my first hobby OS and I look forward to finishing it :)
+- This is my first hobby OS and I look forward to finishing it :)
 
-![Hello, World!](./rsrc/hello-world.png)
+![Hello, World!](./rsrc/gdt.png)
 
 ## What can it do?
 
@@ -20,13 +20,14 @@ Key:
 *	 -:	undecided
 *	 /:	scrapped
 
--	[d]	framebuffer terminal driver		
--	[d]	stdio implementation			
--	[s]	kernel libs						
--	[w]	GDT/IDT							
--	[n]	software interrupts				
--	[.]	hardware interrupts (PIC)		
--	[.]	timer							
--	[.]	physical memory management		
--	[-]	virtual memory management		
+-	[d]	framebuffer terminal driver
+-	[d]	stdio implementation
+-	[s]	kernel libs
+-	[d]	GDT
+-   [n] IDT
+-	[n]	software interrupts
+-	[.]	hardware interrupts (PIC)
+-	[.]	timer
+-	[.]	physical memory management
+-	[-]	virtual memory management
 -	...
