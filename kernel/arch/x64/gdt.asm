@@ -1,12 +1,18 @@
 [bits 64]
-global gdt_load 
+global gdt_load
+global gdt_reload_segments
+
 gdt_load:
 	lgdt [rdi]
+	ret
+
+gdt_reload_segments:
 	push 0x08
-	lea rax, [rel reload_CS]
+	lea rax, [.reload_cs]
+	push rax
 	retfq
 
-reload_CS:
+.reload_cs:
 	mov ax, 0x10
 	mov ds, ax
 	mov es, ax

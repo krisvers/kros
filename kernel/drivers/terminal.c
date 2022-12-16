@@ -56,10 +56,14 @@ void tty_putc(uint32_t c) {
 		case '\r': x = 1; break;
 		case '\t':
 		{
-			static const uint8_t tabSize = 8;
-			uint8_t                        toSkip  = x % tabSize;
-			if (toSkip % 8 == 0) x += 8;
-			else x += (tabSize - toSkip) * font_scale;
+			static const uint8_t tabSize = 4;
+			uint8_t toSkip = x % tabSize;
+			
+			if (toSkip % 4 == 0) {
+				x += 4;
+			} else {
+				x += (tabSize - toSkip) * font_scale;
+			}
 		}
 		break;
 		case '\v': y += 4; goto check_y;
