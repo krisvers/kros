@@ -24,5 +24,6 @@ typedef struct {
 	GDT * Offset;
 } __attribute__((packed)) GDTDesc;
 
+void idt_init();
 void gdt_load(GDTDesc * gdtDesc);
 void gdt_reload_segments();

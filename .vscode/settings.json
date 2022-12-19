@@ -16,7 +16,8 @@
         "functional": "c",
         "tuple": "c",
         "type_traits": "c",
-        "utility": "c"
+        "utility": "c",
+        "terminal.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

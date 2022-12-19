@@ -19,21 +19,13 @@ static void done(void) {
 	}
 }
 
-struct limine_framebuffer_response * framebuffer_response;
-
 // The following will be our kernel's entry point.
 void _start(void) {
-	if (framebuffer_request.response == NULL) {
+	if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffers == NULL || framebuffer_request.response->framebuffers[0] == NULL) {
 		done();
 	}
 
-	framebuffer_response = framebuffer_request.response;
-
-	if (!(framebuffer_response->framebuffer_count > 0)) {
-		done();
-	}
-
-	main(framebuffer_response->framebuffers[0]);
+	main(framebuffer_request.response->framebuffers[0]);
 
 	// We're done, just hang...
 	done();

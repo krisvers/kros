@@ -1,5 +1,5 @@
 .PHONY: all
-all: barebones.iso run
+all: barebones.iso run clean
 
 .PHONY: all-hdd
 all-hdd: barebones.hdd run-hdd
