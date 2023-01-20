@@ -6,6 +6,7 @@
 #include <arch/x86/hal/pit.h>
 #include <arch/x86/drivers/cpubasics.h>
 #include <std/stdio.h>
+#include <std/stdlib.h>
 #include <arch/x86/drivers/tty.h>
 #include <arch/x86/drivers/vga.h>
 #include <arch/x86/drivers/keyboard.h>
@@ -15,7 +16,7 @@ size_t mseconds = 0;
 
 void timer_handler(Registers * regs) {
 	mseconds++;
-	putc('.');
+	//putc('.');
 }
 
 void key_handler(Registers * regs) {
@@ -23,18 +24,22 @@ void key_handler(Registers * regs) {
 	putc('k');
 }
 
-uint8_t mem[2048];
-size_t mem_index = 0;
+int sqr(int num, int power) {
+    int ret = num;
 
-void * alloc(size_t size) {
-	for (size_t i = 0; i < size;)
+    for (uint8_t i = 0; i < power - 1; i++) {
+        ret *= num;
+    }
+
+    return ret;
 }
 
-void * free(void * ptr, size_t size) {
-	for (size_t i = 0; i < size; i++) {
-		ptr[0] = NULL;
-	}
-	mem_index -= size;
+void * alloc(size_t size) {
+    // TODO: plan the allocator
+}
+
+void free(void * ptr, size_t size) {
+    // TODO: plan the freer
 }
 
 void main() {
@@ -50,6 +55,9 @@ void main() {
 	isr_init();
 	printf("Loading IRQ\n");
 	irq_init();
+    printf("2^8 == %d\n", sqr(2, 8));
+
+    // TODO: run some allocator and free tests
 
 	while (1) {
 		
