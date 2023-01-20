@@ -18,7 +18,14 @@ void tty_putc(char c, enum vga_color fg) {
 
 void tty_linefeed() {
     tty_column = 0;
-    tty_row++;
+    if (tty_row++ >= 25) {
+    	tty_row = 24;
+    	tty_scroll();
+    }
+}
+
+void tty_scroll() {
+	vga_scroll();
 }
 
 void tty_tab() {

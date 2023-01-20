@@ -1,7 +1,7 @@
 [bits 16]
 org 0x7C00
 
-%define KERN_SIZE 0x24
+%define KERN_SIZE 0x36
 %define KERN_OFFSET 0x1000
 
 start:
@@ -46,9 +46,11 @@ start:
 ; setup stack
 	cli
 	mov bp, 0x7C00
-	mov sp, bp
 	xor ax, ax
+	mov ds, ax
+	mov es, ax
 	mov ss, ax
+	mov sp, bp
 	sti
 
 ; reset disk
@@ -112,14 +114,14 @@ start:
 	mov gs, ax
 	mov es, ax
 	mov ss, ax
-	mov esp, 0x7FFFF ; stack pointer at ~511KiB
+	mov esp, 0x7FFF0 ; stack pointer at ~511KiB
 
 	jmp dword 0x8:KERN_OFFSET
 
 GDT:
     db 0, 0, 0, 0, 0, 0, 0, 0 ; null
-    db 0xFF, 0xFF, 0x0, 0x0, 0x0, 10011010b, 11001111b, 0x0 ; Code segment
-    db 0xFF, 0xFF, 0x0, 0x0, 0x0, 10010011b, 11001111b, 0x0 ; Data segment
+    db 0xFF, 0xFF, 0x0, 0x0, 0x0, 0b10011010, 0b11001111, 0x0 ; Code segment
+    db 0xFF, 0xFF, 0x0, 0x0, 0x0, 0b10010011, 0b11001111, 0x0 ; Data segment
 GDT_end:
 
 gdtr:

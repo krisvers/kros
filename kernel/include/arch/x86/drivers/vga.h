@@ -1,4 +1,5 @@
 #pragma once
+#include <std/types.h>
 
 enum vga_color {
     BLACK = 0x00,
@@ -18,4 +19,6 @@ enum vga_color {
 void vga_putc(int x, int y, char c, enum vga_color fg_color, enum vga_color bg_color);
 void vga_setbg(enum vga_color bg);
 void vga_clear();
+void vga_fill(enum vga_color color);
 char vga_getc(int x, int y);
+void vga_scroll();
