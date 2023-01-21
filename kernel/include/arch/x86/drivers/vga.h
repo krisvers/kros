@@ -1,5 +1,6 @@
 #pragma once
 #include <std/types.h>
+#include <std/string.h>
 
 enum vga_color {
     BLACK = 0x00,

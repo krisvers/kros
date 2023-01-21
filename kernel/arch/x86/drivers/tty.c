@@ -1,7 +1,7 @@
 #include <arch/x86/drivers/tty.h>
 
-static size_t tty_row;
-static size_t tty_column;
+static int8_t tty_row;
+static int8_t tty_column;
 
 void tty_init() {
     vga_setbg(BLACK);
@@ -16,16 +16,16 @@ void tty_putc(char c, enum vga_color fg) {
     }
 }
 
+void tty_scroll() {
+    vga_scroll();
+}
+
 void tty_linefeed() {
     tty_column = 0;
-    if (tty_row++ >= 25) {
+    if (tty_row++ >= 24) {
     	tty_row = 24;
     	tty_scroll();
     }
-}
-
-void tty_scroll() {
-	vga_scroll();
 }
 
 void tty_tab() {
@@ -33,6 +33,17 @@ void tty_tab() {
     if (tty_column >= 80) {
         tty_linefeed();
     }
+}
+
+void tty_backspace() {
+    if (tty_column-- < 0) {
+        tty_column = 79;
+        if (tty_row-- < 0) {
+            tty_column = 0;
+            tty_row = 0;
+        }
+    }
+    vga_putc(tty_column, tty_row, ' ', BLACK, BLACK);
 }
 
 void tty_reset() {

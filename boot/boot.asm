@@ -1,8 +1,8 @@
 [bits 16]
 org 0x7C00
 
-%define KERN_SIZE 0x36
-%define KERN_OFFSET 0x1000
+%define KERN_SIZE 0x3B
+%define KERN_OFFSET 0x500
 
 start:
 	jmp .skip_bpb ; Workaround for some BIOSes that require this stub
@@ -84,10 +84,14 @@ start:
 	mov al, 0x03
 	int 0x10
 
+; hide cursor
+	mov ah, 0x01
+	mov ch, 0x3F
+	int 0x10
+
 ; A20
-	;	compute A20 line (i just used the BIOS)
-	mov ax, 0x2403
-	int 0x15
+	;	compute A20 line
+	call enable_A20
 
 ; compute gdtr
 	xor eax, eax
@@ -141,6 +145,51 @@ error:
 	int 0x10
 
 	hlt
+
+
+enable_A20:
+	cli
+
+	call    a20wait
+	mov     al, 0xAD
+	out     0x64, al
+
+	call    a20wait
+	mov     al, 0xD0
+	out     0x64, al
+
+	call    a20wait2
+	in      al, 0x60
+	push    eax
+
+	call    a20wait
+	mov     al, 0xD1
+	out     0x64, al
+
+	call    a20wait
+	pop     eax
+	or      al, 2
+	out     0x60, al
+
+	call    a20wait
+	mov     al, 0xAE
+	out     0x64, al
+
+	call    a20wait
+	sti
+	ret
+
+a20wait:
+	in      al,0x64
+	test    al,2
+	jnz     a20wait
+	ret
+
+a20wait2:
+	in      al,0x64
+	test    al,1
+	jz      a20wait2
+	ret
 
 ;	pack with zeroes
 times 510-($-$$) db 0

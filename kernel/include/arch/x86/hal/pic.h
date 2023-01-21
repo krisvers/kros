@@ -7,3 +7,4 @@ void pic_unmask(int irq);
 void pic_disable();
 uint8_t pic_read_irr();
 uint8_t pic_read_isr();
+void pic_send_eoi();

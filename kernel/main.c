@@ -12,54 +12,29 @@
 #include <arch/x86/drivers/keyboard.h>
 #include <std/stdbool.h>
 
-size_t mseconds = 0;
-
-void timer_handler(Registers * regs) {
-	mseconds++;
-	//putc('.');
-}
-
-void key_handler(Registers * regs) {
-	char key = poll_key_char();
-	putc('k');
-}
-
-int sqr(int num, int power) {
-    int ret = num;
-
-    for (uint8_t i = 0; i < power - 1; i++) {
-        ret *= num;
-    }
-
-    return ret;
-}
-
-void * alloc(size_t size) {
-    // TODO: plan the allocator
-}
-
-void free(void * ptr, size_t size) {
-    // TODO: plan the freer
-}
+char * logo = \
+".      .              ,cc.\n"
+"H ,dP  HdRH.  ,cOc,  A`  `\n"
+"HDP`   H`  o  H   H   `*o.\n"
+"H `Tb  H      `QoP`  ~c.d`    :)\n"
+"\n";
 
 void main() {
-	printf("Loading GDT\n");
-	gdt_init();
-	printf("Loading IDT\n");
-	idt_init();
-	printf("Setting PIT at 1000 hz\n");
-	pit_set_freq(1000);
-	irq_reg_handler(0, timer_handler);
-	irq_reg_handler(1, key_handler);
-	printf("Loading ISR\n");
-	isr_init();
-	printf("Loading IRQ\n");
-	irq_init();
-    printf("2^8 == %d\n", sqr(2, 8));
+    putcolor(BLUE);
+    printf("welcome to kros!\n");
+    printf("%s", logo);
 
-    // TODO: run some allocator and free tests
+	gdt_init();
+	idt_init();
+	isr_init();
+	irq_init();
+    pit_init();
+    keyboard_init();
+
+    putcolor(WHITE);
+    printf("\n> ");
 
 	while (1) {
-		
+
 	}
 }

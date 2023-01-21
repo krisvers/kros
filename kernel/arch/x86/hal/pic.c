@@ -128,3 +128,7 @@ uint8_t pic_read_isr() {
 	outb(PIC2_COMMAND_PORT, PIC_CMD_READ_ISR);
 	return (uint16_t) (inb(PIC1_COMMAND_PORT) | (inb(PIC2_COMMAND_PORT) << 8));
 }
+
+void pic_send_eoi() {
+    outb(PIC1_COMMAND_PORT, PIC_CMD_EOI);
+}

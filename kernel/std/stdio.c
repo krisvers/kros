@@ -1,6 +1,11 @@
 #include <std/stdio.h>
 
 static char hex_chars[16] = "0123456789ABCDEF";
+static enum vga_color color = WHITE;
+
+void putcolor(enum vga_color col) {
+    color = col;
+}
 
 int puts(const char * string) {
 	return printf("%s\n", string);
@@ -9,11 +14,13 @@ int puts(const char * string) {
 int putc(int ic) {
 	char c = (char) ic;
 	if (c == '\n') {
-		tty_linefeed();
+        tty_linefeed();
 	} else if (c == '\t') {
-		tty_tab();
+        tty_tab();
+    } else if (c == '\b') {
+        tty_backspace();
 	} else {
-		tty_putc(c, WHITE);
+		tty_putc(c, color);
 	}
 
 	// TODO: Implement stdio and the write system call.
@@ -98,23 +105,40 @@ int printf(const char * restrict format, ...) {
 			while (--pos >= 0) {
 				putc(buffer[pos]);
 			}
-		} else if (*format == 'x') {
-			putc('0');
-			putc('x');
-			format++;
-			int num = va_arg(parameters, int);
-			char buffer[32];
-			int pos = 0;
+        } else if (*format == 'x') {
+            putc('0');
+            putc('x');
+            format++;
+            int num = va_arg(parameters, int);
+            char buffer[32];
+            int pos = 0;
 
-			do {
-				unsigned long long rem = num % 16;
-				num /= 16;
-				buffer[pos++] = hex_chars[rem];
-			} while (num > 0);
+            do {
+                unsigned long long rem = num % 16;
+                num /= 16;
+                buffer[pos++] = hex_chars[rem];
+            } while (num > 0);
 
-			while (--pos >= 0) {
-				putc(buffer[pos]);
-			}
+            while (--pos >= 0) {
+                putc(buffer[pos]);
+            }
+        } else if (*format == 'b') {
+            putc('0');
+            putc('b');
+            format++;
+            int num = va_arg(parameters, int);
+            char buffer[32];
+            int pos = 0;
+
+            do {
+                unsigned long long rem = num % 2;
+                num /= 2;
+                buffer[pos++] = hex_chars[rem];
+            } while (num > 0);
+
+            while (--pos >= 0) {
+                putc(buffer[pos]);
+            }
 		} else {
 			format = format_begun_at;
 			size_t len = strlen(format);

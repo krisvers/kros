@@ -558,6 +558,13 @@ void isr_initgates() {
 }
 void isr_init() {
 	isr_initgates();
+
+    putcolor(LIGHT_GREY);
+    printf("isr initialized [");
+    putcolor(GREEN);
+    printf("*");
+    putcolor(LIGHT_GREY);
+    printf("]\n");
 }
 
 void __attribute((cdecl)) isr_handler(Registers * regs) {

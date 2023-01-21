@@ -33,7 +33,10 @@ void vga_putc(int x, int y, char c, enum vga_color fg_color, enum vga_color bg_c
 }
 
 void vga_scroll() {
-	for (uint16_t i = 0; i < 80 * 25 - 80; i++) {
-		((uint16_t *) 0xB8000)[i] = ((uint16_t *) 0xB8000)[(i + 80)];
-	}
+    for (uint8_t w = 0; w < 160; w++) {
+        for (uint8_t h = 0; h < 25; h++) {
+            vga_addr[w + (h * 80) * 2] = vga_addr[w + ((h + 1) * 80) * 2];
+        }
+    }
+    memset(0, &vga_addr[(79 * 25) * 2], 160);
 }
