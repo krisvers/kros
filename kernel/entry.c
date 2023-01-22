@@ -1,9 +1,11 @@
 extern char _BSS_START;
 extern char _BSS_END;
 
+#include <std/stdio.h>
+
 void main();
 
-void __attribute__((section(".entry"))) _kernelentry(int argc, char ** argv) {
+void __attribute__((section(".entry"))) _kernelentry() {
 	for (char * addr = &_BSS_START; addr < &_BSS_END; addr++) {
 		* addr = 0;
 	}

@@ -1,6 +1,6 @@
 ENTRY(_kernelentry)
 
-KERNEL_BASE = 0x500;
+KERNEL_BASE = 0x502;
 
 MEMORY
 {

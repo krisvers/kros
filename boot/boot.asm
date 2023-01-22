@@ -2,7 +2,7 @@
 org 0x7C00
 
 %define KERN_SIZE 0x3B
-%define KERN_OFFSET 0x500
+%define KERN_OFFSET 0x502
 
 start:
 	jmp .skip_bpb ; Workaround for some BIOSes that require this stub
@@ -87,24 +87,6 @@ start:
 	mov ch, 0x3F
 	int 0x10
 
-; pci mechanism
-	mov ax, 0xB101
-	int 0x1A
-
-	mov bx, 0xB800
-	mov es, bx
-	xor bx, bx
-
-	mov byte [es:bx], al
-	inc bx
-	mov byte [es:bx], 0x02
-	inc bx
-	mov byte [es:bx], cl
-	inc bx
-	mov byte [es:bx], 0x02
-
-	jmp $
-
 ; enable the A20 line for full memory
 	call enable_A20
 
@@ -119,7 +101,11 @@ start:
 	sub eax, 1
 	mov [gdtr], ax
 
-	pop bx
+; pci mechanism
+	mov eax, 0xB101
+	int 0x1A
+	mov byte [0x500], cl	; mechanism to access PCI
+	mov byte [0x501], al	; number of devices
 
 ; load GDT
 	cli

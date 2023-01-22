@@ -30,6 +30,7 @@ void main() {
 	irq_init();
     pit_init();
     keyboard_init();
+    printf("PCI: configuration: %x, number of devices: %x\n", *((char *) 0x501), *((char *) 0x500));
 
     putcolor(WHITE);
     printf("\n> ");
