@@ -4,12 +4,12 @@ static char buffer[256];
 static uint8_t index = 0;
 
 static bool ps2_wait_read() {
-    for (uint32_t i = 0; i < 500000; i++) {
+    for (uint32_t i = 0; i < 0xFFFFF; i++) {
         if ((inb(0x64) & 0x1) == 0x0) {
             return true;
         }
     }
-    printf("ps/2 wait write timeout\n");
+    //printf("ps/2 wait write timeout\n");
     return false;
 }
 
