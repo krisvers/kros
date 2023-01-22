@@ -3,7 +3,7 @@ extern char _BSS_END;
 
 void main();
 
-void __attribute__((section(".entry"))) _kernelentry() {
+void __attribute__((section(".entry"))) _kernelentry(int argc, char ** argv) {
 	for (char * addr = &_BSS_START; addr < &_BSS_END; addr++) {
 		* addr = 0;
 	}

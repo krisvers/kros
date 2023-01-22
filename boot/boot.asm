@@ -59,10 +59,8 @@ start:
 
 	xor ax, ax
 	mov ds, ax
-
-; this bootloader tries reading and running from multiple disks until they don't return error
 	
-; read next sector and run it (not good practice)
+; read next few sectors and run it (not good practice)
 	mov ah, 0x02	; read mode for int 0x13
 	mov al, KERN_SIZE	; sectors to read (sector = 512 bytes)
 	mov ch, 0x00	; cylinder #
@@ -79,7 +77,7 @@ start:
 	
 	.vid:
 ; setup video mode
-	;	0x03
+	;	0x03: text mode 80x25, 16 FG colors, 16 BG colors
 	mov ah, 0x00
 	mov al, 0x03
 	int 0x10
@@ -89,8 +87,25 @@ start:
 	mov ch, 0x3F
 	int 0x10
 
-; A20
-	;	compute A20 line
+; pci mechanism
+	mov ax, 0xB101
+	int 0x1A
+
+	mov bx, 0xB800
+	mov es, bx
+	xor bx, bx
+
+	mov byte [es:bx], al
+	inc bx
+	mov byte [es:bx], 0x02
+	inc bx
+	mov byte [es:bx], cl
+	inc bx
+	mov byte [es:bx], 0x02
+
+	jmp $
+
+; enable the A20 line for full memory
 	call enable_A20
 
 ; compute gdtr
@@ -104,9 +119,13 @@ start:
 	sub eax, 1
 	mov [gdtr], ax
 
+	pop bx
+
 ; load GDT
 	cli
 	lgdt [gdtr]
+
+; protected mode
 	mov eax, cr0
 	or ax, 1 ; set protection enable bit
 	mov cr0, eax

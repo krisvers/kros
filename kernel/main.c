@@ -12,7 +12,7 @@
 #include <arch/x86/drivers/keyboard.h>
 #include <std/stdbool.h>
 
-char * logo = \
+static char * art = \
 ".      .              ,cc.\n"
 "H ,dP  HdRH.  ,cOc,  A`  `\n"
 "HDP`   H`  o  H   H   `*o.\n"
@@ -22,7 +22,7 @@ char * logo = \
 void main() {
     putcolor(BLUE);
     printf("welcome to kros!\n");
-    printf("%s", logo);
+    printf("%s", art);
 
 	gdt_init();
 	idt_init();
@@ -35,6 +35,6 @@ void main() {
     printf("\n> ");
 
 	while (1) {
-        
+
 	}
 }
