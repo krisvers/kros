@@ -104,8 +104,8 @@ start:
 ; pci mechanism
 	mov eax, 0xB101
 	int 0x1A
-	mov byte [0x500], cl	; mechanism to access PCI
-	mov byte [0x501], al	; number of devices
+	mov byte [0x500], cl	; number of devices
+	mov byte [0x501], al	; mechanism to access PCI
 
 ; load GDT
 	cli
