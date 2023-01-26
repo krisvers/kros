@@ -1,9 +1,14 @@
 #include <arch/x86/hal/pit.h>
 
-static size_t mseconds = 0;
+uint8_t mseconds = 0;
 
-static void timer_handler(Registers * regs) {
+void render();
+void timer_handler(Registers * regs) {
     mseconds++;
+    if (mseconds >= 100) {
+        mseconds = 0;
+		render();
+    }
     pic_send_eoi();
 }
 
@@ -15,13 +20,6 @@ void pit_set_freq(size_t hz) {
 }
 
 void pit_init() {
-    pit_set_freq(1000);
-    putcolor(LIGHT_GREY);
-    printf("pit initialized [");
-    putcolor(GREEN);
-    printf("*");
-    putcolor(LIGHT_GREY);
-    printf("]\n\t");
-    printf("hz: %d, ms: %d\n", 1000, mseconds);
+    pit_set_freq(1666);
     irq_reg_handler(0, timer_handler);
 }

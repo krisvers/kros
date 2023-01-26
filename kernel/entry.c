@@ -1,8 +1,6 @@
 extern char _BSS_START;
 extern char _BSS_END;
 
-#include <std/stdio.h>
-
 void main();
 
 void __attribute__((section(".entry"))) _kernelentry() {

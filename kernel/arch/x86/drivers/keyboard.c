@@ -2,9 +2,10 @@
 
 static char buffer[256];
 static uint8_t index = 0;
+char keydown = 0;
 
 static bool ps2_wait_read() {
-    for (uint32_t i = 0; i < 0xFFFFF; i++) {
+    for (uint32_t i = 0; i < 50000; i++) {
         if ((inb(0x64) & 0x1) == 0x0) {
             return true;
         }
@@ -65,6 +66,8 @@ static char keycodes_shift[128] = {
 
 static bool shift_pressed = false;
 
+bool keysdown[256];
+
 static char poll_key_char() {
 	char keycode = inb(0x60);
 	if ((keycode == 0x2A) || (keycode == 0x36)) {
@@ -79,30 +82,24 @@ static char poll_key_char() {
 	return -1;
 }
 
+bool keyboard_getkey(char c) {
+    return keysdown[c - 0x1F];
+}
+
 void keyboard_handler(Registers * regs) {
-    char c = 0;
-    pic_send_eoi();
     inb(0x60);
-    if (ps2_wait_read()) {
-        c = poll_key_char();
-        if (c == '\b') {
-            putc('\b');
-            buffer[index] = 0;
-            index--;
-        } else if (c == '\n') {
-            putc('\n');
-            buffer[0] = 0;
-            index = 0;
-        } else if (c == '\t') {
-            putc('\t');
-            buffer[index] = ' ';
-            index++;
-        } else if (c > 0) {
-            putc(c);
-            buffer[index] = c;
-            index++;
-        }
+    keydown = 0;
+    outb(0x64, 0xAD);
+    uint8_t scancode = inb(0x60);
+    bool pressed = true;
+    if (scancode & 128) {
+        pressed = false;
+    } else {
+        keydown = keycodes[scancode];
     }
+
+    keysdown[keydown - 0x1F] = pressed;
+    outb(0x64, 0xAE);
 }
 
 char * keyboard_buffer() {
@@ -110,12 +107,5 @@ char * keyboard_buffer() {
 }
 
 void keyboard_init() {
-    putcolor(LIGHT_GREY);
-    printf("ps/2 keyboard initialized [");
-    putcolor(GREEN);
-    printf("*");
-    putcolor(LIGHT_GREY);
-    printf("]\n\t");
-    printf("layout: qwerty\n");
     irq_reg_handler(1, keyboard_handler);
 }

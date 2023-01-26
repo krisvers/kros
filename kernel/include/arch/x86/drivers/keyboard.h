@@ -4,4 +4,8 @@
 #include <arch/x86/hal/irq.h>
 #include <std/stdbool.h>
 
+char keydown;
+bool keysdown[256];
+
 void keyboard_init();
+bool keyboard_getkey(char c);

@@ -1,5 +1,4 @@
 #pragma once
-#include <std/stdio.h>
 #include <std/types.h>
 #include <std/stdlib.h>
 #include <arch/x86/hal/idt.h>
