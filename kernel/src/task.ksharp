@@ -1,0 +1,5 @@
+include! <console.h>;
+
+ksharpTask: () = {
+    console_write(1, "Hello, World from KSharp\n", 26);
+};

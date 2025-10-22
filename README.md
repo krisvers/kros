@@ -5,7 +5,7 @@ We're back in business baby!
 This is a very simple x86 Ring 0 OS. It's end goal is to be more of an abstraction layer for me when I make low-level games.
 
 Current state:
-![image](https://media.discordapp.net/attachments/1066821682712555580/1066821683027116153/image.png)
+![image](./image.png)
 
 ## Roadmap
 
