@@ -1,8 +1,4 @@
-# kros
-### January 19 16:12 UTC
-
-We're back in business baby!
-This is a very simple x86 Ring 0 OS. It's end goal is to be more of an abstraction layer for me when I make low-level games.
+# kros - x86 light-weight operating system with custom bootloader
 
 Current state:
 ![image](./image.png)
